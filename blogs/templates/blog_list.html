@@ -1,0 +1,364 @@
+ {% extends "base.html" %}
+
+
+{% block title %}
+Blog List | Blog Management System
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- Header -->
+
+<div class="d-flex justify-content-between
+            align-items-center
+            flex-wrap
+            gap-3
+            mb-4">
+
+    <div>
+
+        <h1 class="mb-1">
+            Blog List
+        </h1>
+
+        <p class="text-muted mb-0">
+            All published blog posts
+        </p>
+
+    </div>
+
+
+    <a
+        href="{% url 'blog_create' %}"
+        class="btn btn-primary"
+    >
+        + Add New Blog
+    </a>
+
+</div>
+
+
+
+{% if blogs %}
+
+{% comment %} CARD VIEW {% endcomment %}
+
+<h3 class="mb-3">
+    Blog Cards
+</h3>
+
+
+<div class="row g-4 mb-5">
+
+
+    {% for blog in blogs %}
+
+
+    <div class="col-md-6 col-lg-4">
+
+
+        <div class="card h-100 shadow-sm border-0">
+
+
+            {% if blog.blog_image %}
+
+                <img
+                    src="{{ blog.blog_image.url }}"
+                    class="card-img-top"
+                    style="
+                    height:200px;
+                    object-fit:cover;
+                    "
+                    alt="{{ blog.title }}"
+                >
+
+            {% else %}
+
+                <div
+                    class="bg-secondary
+                           text-white
+                           d-flex
+                           justify-content-center
+                           align-items-center"
+                    style="height:200px;"
+                >
+
+                    No Image
+
+                </div>
+
+            {% endif %}
+
+
+
+            <div class="card-body">
+
+
+                <span class="badge text-bg-primary mb-2">
+
+                    {{ blog.category }}
+
+                </span>
+
+
+                <h5 class="card-title">
+
+                    {{ blog.title }}
+
+                </h5>
+
+
+                <p class="text-muted small mb-2">
+
+                    By {{ blog.author_name }}
+
+                    <br>
+
+                    {{ blog.publish_date|date:"d M Y, h:i A" }}
+
+                </p>
+
+
+                <p class="card-text">
+
+                    {{ blog.content|truncatewords:20 }}
+
+                </p>
+
+
+            </div>
+
+
+            <div class="card-footer bg-white border-0">
+
+
+                <a
+                    href="{% url 'blog_detail' blog.pk %}"
+                    class="btn btn-primary btn-sm"
+                >
+                    View Details
+                </a>
+
+
+                <a
+                    href="{% url 'blog_update' blog.pk %}"
+                    class="btn btn-warning btn-sm"
+                >
+                    Edit
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    {% endfor %}
+
+
+</div>
+
+{% comment %} TABLE VIEW {% endcomment %}
+
+<h3 class="mb-3">
+    Blog Table
+</h3>
+
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-body p-0">
+
+
+        <div class="table-responsive">
+
+
+            <table
+                class="table table-striped
+                       table-hover
+                       align-middle
+                       mb-0"
+            >
+
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>
+                            Blog Image
+                        </th>
+
+                        <th>
+                            Title
+                        </th>
+
+                        <th>
+                            Author
+                        </th>
+
+                        <th>
+                            Publish Date
+                        </th>
+
+                        <th>
+                            Category
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    {% for blog in blogs %}
+
+
+                    <tr>
+
+
+                        <td>
+
+
+                            {% if blog.blog_image %}
+
+                                <img
+                                    src="{{ blog.blog_image.url }}"
+                                    width="70"
+                                    height="50"
+                                    class="rounded"
+                                    style="
+                                    object-fit:cover;
+                                    "
+                                    alt="{{ blog.title }}"
+                                >
+
+                            {% else %}
+
+                                <span class="text-muted">
+                                    No Image
+                                </span>
+
+                            {% endif %}
+
+
+                        </td>
+
+
+                        <td>
+
+                            <strong>
+                                {{ blog.title }}
+                            </strong>
+
+                        </td>
+
+
+                        <td>
+
+                            {{ blog.author_name }}
+
+                        </td>
+
+
+                        <td>
+
+                            {{ blog.publish_date|date:"d M Y, h:i A" }}
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="badge text-bg-primary">
+
+                                {{ blog.category }}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <a
+                                href="{% url 'blog_detail' blog.pk %}"
+                                class="btn btn-primary btn-sm"
+                            >
+                                View
+                            </a>
+
+                        </td>
+
+
+                    </tr>
+
+
+                    {% endfor %}
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+{% else %}
+
+
+<!-- No blogs -->
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-body text-center p-5">
+
+
+        <h3>
+            No Blog Posts Yet
+        </h3>
+
+
+        <p class="text-muted">
+
+            Create your first blog post.
+
+        </p>
+
+
+        <a
+            href="{% url 'blog_create' %}"
+            class="btn btn-primary"
+        >
+            Add Blog
+        </a>
+
+
+    </div>
+
+</div>
+
+
+{% endif %}
+
+
+{% endblock %}

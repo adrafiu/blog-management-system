@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Home | Blog Management System
+{% endblock %}
+
+
+{% block content %}
+
+<!-- Hero Section -->
+
+<div class="p-5 mb-4 bg-primary text-white rounded-4 shadow">
+
+    <div class="container-fluid py-4">
+
+        {% if user.is_authenticated %}
+
+            <h1 class="display-5 fw-bold">
+
+                Welcome,
+                {{ user.full_name|default:user.username }}!
+
+            </h1>
+
+            <p class="fs-5">
+
+                You are successfully logged in.
+
+                Now you can manage your blog posts.
+
+            </p>
+
+
+            <a
+                href="{% url 'blog_list' %}"
+                class="btn btn-light btn-lg me-2"
+            >
+                View Blog List
+            </a>
+
+
+            <a
+                href="{% url 'blog_create' %}"
+                class="btn btn-success btn-lg"
+            >
+                Create New Blog
+            </a>
+
+
+        {% else %}
+
+
+            <h1 class="display-5 fw-bold">
+
+                Welcome to Blog Management System
+
+            </h1>
+
+
+            <p class="fs-5">
+
+                Register, login and manage
+                your blog posts easily.
+
+            </p>
+
+
+            <a
+                href="{% url 'register' %}"
+                class="btn btn-light btn-lg me-2"
+            >
+                Register
+            </a>
+
+
+            <a
+                href="{% url 'login' %}"
+                class="btn btn-dark btn-lg"
+            >
+                Login
+            </a>
+
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<!-- Features -->
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-body p-4">
+
+        <h2 class="mb-4">
+            System Features
+        </h2>
+
+
+        <div class="row g-3">
+
+
+            <div class="col-md-4">
+
+                <div class="card h-100 bg-light border-0">
+
+                    <div class="card-body">
+
+                        <h5>
+                            User Authentication
+                        </h5>
+
+                        <p class="text-muted mb-0">
+
+                            Register, Login and Logout.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="card h-100 bg-light border-0">
+
+                    <div class="card-body">
+
+                        <h5>
+                            Blog Management
+                        </h5>
+
+                        <p class="text-muted mb-0">
+
+                            Add, View, Update and Delete
+                            blog posts.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="card h-100 bg-light border-0">
+
+                    <div class="card-body">
+
+                        <h5>
+                            Categories
+                        </h5>
+
+                        <p class="text-muted mb-0">
+
+                            Educational, Technologies
+                            and Sports.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}
